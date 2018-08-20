@@ -17,6 +17,7 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.irfancan.justcleantest.MainActivity;
 import com.irfancan.justcleantest.R;
 import com.irfancan.justcleantest.constants.Constants;
 import com.irfancan.justcleantest.models.MoviesResponse;
@@ -79,11 +80,34 @@ public class MoviesListFragment extends Fragment {
             positionOfFragment = bundle.getInt(Constants.FRAGMENT_POSITION);
         }
 
-        //Just to check if I can get the data
-        testPopularMoviesRequest();
+        //Just to test if requests work (Testing currently with VOLLEY)
+        retrieveData(positionOfFragment);
+
 
     }
 
+
+
+
+    private void retrieveData(int positionOfThisFragment){
+
+        if(positionOfThisFragment==0){
+
+            testPopularMoviesRequest();
+
+        }else if(positionOfThisFragment==1){
+
+            testTopRated();
+
+
+        }else if(positionOfThisFragment==2){
+
+            testUpcoming();
+
+        }
+
+
+    }
 
 
 
@@ -127,6 +151,82 @@ public class MoviesListFragment extends Fragment {
     }
 
 
+
+
+    private void testTopRated(){
+
+
+        RequestQueue queue = Volley.newRequestQueue(getActivity());
+        String url ="https://api.themoviedb.org/3/movie/top_rated?api_key=a22e4f0e19562d452bb0faabc3c925c9&language=en-US&page=1";
+
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
+                (Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
+
+                    @Override
+                    public void onResponse(JSONObject response) {
+
+                        Gson gson = new GsonBuilder().create();
+                        RootResponse boxOfficeMovieResponse = gson.fromJson(String.valueOf(response), RootResponse.class);
+
+                        moviesResponses.clear();
+                        moviesResponses.addAll(boxOfficeMovieResponse.getResults());
+
+                        mAdapter.notifyDataSetChanged();
+
+
+                    }
+                }, new Response.ErrorListener() {
+
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        // TODO: Handle error
+
+                    }
+                });
+
+        queue.add(jsonObjectRequest);
+
+    }
+
+
+
+
+
+    private void testUpcoming(){
+
+
+        RequestQueue queue = Volley.newRequestQueue(getActivity());
+        String url ="https://api.themoviedb.org/3/movie/upcoming?api_key=a22e4f0e19562d452bb0faabc3c925c9&language=en-US&page=1";
+
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
+                (Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
+
+                    @Override
+                    public void onResponse(JSONObject response) {
+
+                        Gson gson = new GsonBuilder().create();
+                        RootResponse boxOfficeMovieResponse = gson.fromJson(String.valueOf(response), RootResponse.class);
+
+
+                        moviesResponses.clear();
+                        moviesResponses.addAll(boxOfficeMovieResponse.getResults());
+
+                        mAdapter.notifyDataSetChanged();
+
+
+                    }
+                }, new Response.ErrorListener() {
+
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        // TODO: Handle error
+
+                    }
+                });
+
+        queue.add(jsonObjectRequest);
+
+    }
 
 
 
