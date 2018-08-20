@@ -9,10 +9,14 @@
 
     <!--HINTS-->
     <string name="movie_name">Movie name goes here</string>
-    <string name="type_movie">Enter Movie Name (Ex: Avatar)</string>
+    <string name="type_movie">Enter Movie Name (Ex: Jurassic Park)</string>
 
 
     <!--BUTTON TEXT-->
     <string name="search_button">Search</string>
+    <string name="search_another_movie_button">Search Other Movies</string>
+    <string name="movie_db_text">The Movie DB</string>
+
+
 
 </resources>

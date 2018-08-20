@@ -18,7 +18,7 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.irfancan.justcleantest.MainActivity;
+import com.irfancan.justcleantest.views.activity.MainActivity;
 import com.irfancan.justcleantest.R;
 import com.irfancan.justcleantest.constants.Constants;
 import com.irfancan.justcleantest.models.MoviesResponse;
