@@ -6,16 +6,23 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
 import com.irfancan.justcleantest.pageradapter.MoviesPagerAdapter;
+import com.irfancan.justcleantest.presenters.MoviesPresenter;
 
 public class MainActivity extends AppCompatActivity {
 
     //ViewPager
     ViewPager viewPager;
 
+    //Presenter
+    MoviesPresenter moviesPresenter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        //Presenter is responsible in retrieving data from model and sending it to the UI ( Used to follow MVP design approach )
+        moviesPresenter=new MoviesPresenter();
 
         //Initializes ViewPager
         viewPager=findViewById(R.id.moviesViewPager);
@@ -26,5 +33,12 @@ public class MainActivity extends AppCompatActivity {
         tabLayout.setupWithViewPager(viewPager);
 
 
+    }
+
+
+
+    //Fragments will use this method to retrieve ref of Presenter
+    public MoviesPresenter getMoviesPresenter() {
+        return moviesPresenter;
     }
 }

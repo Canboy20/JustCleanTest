@@ -93,16 +93,27 @@ public class MoviesListFragment extends Fragment {
 
         if(positionOfThisFragment==0){
 
-            testPopularMoviesRequest();
+            //RXJava Version
+            ((MainActivity)getActivity()).getMoviesPresenter().getPopularMoviesRx(getContext(),moviesResponses,mAdapter);
+
+            //VOLLEY Version
+            //testPopularMoviesRequest();
 
         }else if(positionOfThisFragment==1){
 
-            testTopRated();
+            //RXJava Version
+            ((MainActivity)getActivity()).getMoviesPresenter().getTopRatedMoviesRx(getContext(),moviesResponses,mAdapter);
 
+            //VOLLEY Version
+            //testTopRated();
 
         }else if(positionOfThisFragment==2){
 
-            testUpcoming();
+            //RXJava Version
+            ((MainActivity)getActivity()).getMoviesPresenter().getUpcomingMoviesRx(getContext(),moviesResponses,mAdapter);
+
+            //VOLLEY Version
+            //testUpcoming();
 
         }
 
