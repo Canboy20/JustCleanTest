@@ -11,12 +11,17 @@ import com.irfancan.justcleantest.R;
 import com.irfancan.justcleantest.pageradapter.MoviesPagerAdapter;
 import com.irfancan.justcleantest.presenters.MoviesPresenter;
 
+import javax.inject.Inject;
+
+import dagger.android.AndroidInjection;
+
 public class MainActivity extends AppCompatActivity {
 
     //ViewPager
     ViewPager viewPager;
 
     //Presenter
+    @Inject
     MoviesPresenter moviesPresenter;
 
     @Override
@@ -24,6 +29,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         requestWindowFeature(Window.FEATURE_NO_TITLE);
+
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
@@ -31,7 +37,9 @@ public class MainActivity extends AppCompatActivity {
 
 
         //Presenter is responsible in retrieving data from model and sending it to the UI ( Used to follow MVP design approach )
-        moviesPresenter=new MoviesPresenter();
+        //Dagger will automatically create 'MoviesPresenter'. No need for 'moviesPresenter=new MoviesPresenter();'
+        AndroidInjection.inject(this);
+        //moviesPresenter=new MoviesPresenter();
 
         //Initializes ViewPager
         viewPager=findViewById(R.id.moviesViewPager);

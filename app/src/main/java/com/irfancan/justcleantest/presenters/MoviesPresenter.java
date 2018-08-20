@@ -14,6 +14,8 @@ import com.irfancan.justcleantest.views.fragments.FragmentDataUpdater;
 
 import java.util.List;
 
+import javax.inject.Inject;
+
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.observers.DisposableSingleObserver;
 import io.reactivex.schedulers.Schedulers;
@@ -22,6 +24,10 @@ import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class MoviesPresenter {
+
+    @Inject
+    public MoviesPresenter(){
+    }
 
 
     private static Retrofit retrofit = null;
