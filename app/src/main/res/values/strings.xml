@@ -3,11 +3,16 @@
 
     <!--TAB NAMES-->
     <string name="popular_movies">Popular</string>
-    <string name="top_rated_movies">Top Rated</string>
+    <string name="top_rated_movies">Top</string>
     <string name="upcoming_movies">Upcoming</string>
     <string name="search_movies">Search</string>
 
     <!--HINTS-->
     <string name="movie_name">Movie name goes here</string>
+    <string name="type_movie">Enter Movie Name (Ex: Avatar)</string>
+
+
+    <!--BUTTON TEXT-->
+    <string name="search_button">Search</string>
 
 </resources>

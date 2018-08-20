@@ -10,6 +10,9 @@
     <font
         android:fontStyle="italic"
         android:fontWeight="400"
-        android:font="@font/dubai_bold" />
+        android:font="@font/dubai_light" />
+
+
+
 
 </font-family>

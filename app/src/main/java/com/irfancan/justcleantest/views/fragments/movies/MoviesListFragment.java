@@ -8,6 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -37,6 +38,10 @@ public class MoviesListFragment extends Fragment {
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
 
+    //ProgressBar
+    ProgressBar progressBar;
+
+
     //Holds the movies that will be displayed on the list
     List<MoviesResponse> moviesResponses=new ArrayList<>();
 
@@ -55,6 +60,8 @@ public class MoviesListFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.movies_list, container, false);
 
         mRecyclerView=rootView.findViewById(R.id.movies_recycler_view);
+
+        progressBar=rootView.findViewById(R.id.progressBar);
 
         // Linear layout manager
         mLayoutManager = new LinearLayoutManager(getActivity());
@@ -91,10 +98,14 @@ public class MoviesListFragment extends Fragment {
 
     private void retrieveData(int positionOfThisFragment){
 
+
+        progressBar.setVisibility(View.VISIBLE);
+
+
         if(positionOfThisFragment==0){
 
             //RXJava Version
-            ((MainActivity)getActivity()).getMoviesPresenter().getPopularMoviesRx(getContext(),moviesResponses,mAdapter);
+            ((MainActivity)getActivity()).getMoviesPresenter().getPopularMoviesRx(getContext(),moviesResponses,mAdapter,progressBar);
 
             //VOLLEY Version
             //testPopularMoviesRequest();
@@ -102,7 +113,7 @@ public class MoviesListFragment extends Fragment {
         }else if(positionOfThisFragment==1){
 
             //RXJava Version
-            ((MainActivity)getActivity()).getMoviesPresenter().getTopRatedMoviesRx(getContext(),moviesResponses,mAdapter);
+            ((MainActivity)getActivity()).getMoviesPresenter().getTopRatedMoviesRx(getContext(),moviesResponses,mAdapter,progressBar);
 
             //VOLLEY Version
             //testTopRated();
@@ -110,7 +121,7 @@ public class MoviesListFragment extends Fragment {
         }else if(positionOfThisFragment==2){
 
             //RXJava Version
-            ((MainActivity)getActivity()).getMoviesPresenter().getUpcomingMoviesRx(getContext(),moviesResponses,mAdapter);
+            ((MainActivity)getActivity()).getMoviesPresenter().getUpcomingMoviesRx(getContext(),moviesResponses,mAdapter,progressBar);
 
             //VOLLEY Version
             //testUpcoming();

@@ -3,6 +3,8 @@ package com.irfancan.justcleantest.presenters;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.View;
+import android.widget.ProgressBar;
 
 import com.irfancan.justcleantest.constants.Constants;
 import com.irfancan.justcleantest.models.MoviesResponse;
@@ -39,7 +41,7 @@ public class MoviesPresenter {
     }
 
 
-    public void getPopularMoviesRx(Context contextRef, final List<MoviesResponse> moviesResponses, final RecyclerView.Adapter mAdapter){
+    public void getPopularMoviesRx(Context contextRef, final List<MoviesResponse> moviesResponses, final RecyclerView.Adapter mAdapter, final ProgressBar progressBar){
 
         MovieApiService apiService = getClient(contextRef.getApplicationContext())
                 .create(MovieApiService.class);
@@ -53,6 +55,8 @@ public class MoviesPresenter {
                     public void onSuccess(RootResponse rootResponse) {
                         // Received all notes
                         Log.d("TEST SUCCESS","RETRIEVED");
+                        progressBar.setVisibility(View.GONE);
+
                         moviesResponses.clear();
                         moviesResponses.addAll(rootResponse.getResults());
 
@@ -63,6 +67,8 @@ public class MoviesPresenter {
                     public void onError(Throwable e) {
                         // Network error
                         Log.d("TEST FAILED","FAILED");
+                        progressBar.setVisibility(View.GONE);
+
 
                     }
                 });
@@ -72,7 +78,7 @@ public class MoviesPresenter {
     }
 
 
-    public void getTopRatedMoviesRx(Context contextRef, final List<MoviesResponse> moviesResponses, final RecyclerView.Adapter mAdapter){
+    public void getTopRatedMoviesRx(Context contextRef, final List<MoviesResponse> moviesResponses, final RecyclerView.Adapter mAdapter, final ProgressBar progressBar){
 
         MovieApiService apiService = getClient(contextRef.getApplicationContext())
                 .create(MovieApiService.class);
@@ -86,6 +92,8 @@ public class MoviesPresenter {
                     public void onSuccess(RootResponse rootResponse) {
                         // Received all notes
                         Log.d("TEST SUCCESS","RETRIEVED");
+                        progressBar.setVisibility(View.GONE);
+
                         moviesResponses.clear();
                         moviesResponses.addAll(rootResponse.getResults());
 
@@ -97,6 +105,8 @@ public class MoviesPresenter {
                     public void onError(Throwable e) {
                         // Network error
                         Log.d("TEST FAILED","FAILED");
+                        progressBar.setVisibility(View.GONE);
+
 
                     }
                 });
@@ -104,7 +114,7 @@ public class MoviesPresenter {
     }
 
 
-    public void getUpcomingMoviesRx(Context contextRef, final List<MoviesResponse> moviesResponses, final RecyclerView.Adapter mAdapter){
+    public void getUpcomingMoviesRx(Context contextRef, final List<MoviesResponse> moviesResponses, final RecyclerView.Adapter mAdapter, final ProgressBar progressBar){
 
         MovieApiService apiService = getClient(contextRef.getApplicationContext())
                 .create(MovieApiService.class);
@@ -118,6 +128,8 @@ public class MoviesPresenter {
                     public void onSuccess(RootResponse rootResponse) {
                         // Received all notes
                         Log.d("TEST SUCCESS","RETRIEVED");
+                        progressBar.setVisibility(View.GONE);
+
                         moviesResponses.clear();
                         moviesResponses.addAll(rootResponse.getResults());
 
@@ -129,6 +141,8 @@ public class MoviesPresenter {
                     public void onError(Throwable e) {
                         // Network error
                         Log.d("TEST FAILED","FAILED");
+                        progressBar.setVisibility(View.GONE);
+
 
                     }
                 });
