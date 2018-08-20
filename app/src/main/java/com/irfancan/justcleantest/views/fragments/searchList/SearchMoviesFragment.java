@@ -1,4 +1,4 @@
-package com.irfancan.justcleantest.views.fragments.search;
+package com.irfancan.justcleantest.views.fragments.searchList;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;

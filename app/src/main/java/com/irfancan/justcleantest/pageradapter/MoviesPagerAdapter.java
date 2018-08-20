@@ -8,8 +8,8 @@ import android.support.v4.app.FragmentPagerAdapter;
 
 import com.irfancan.justcleantest.R;
 import com.irfancan.justcleantest.constants.Constants;
-import com.irfancan.justcleantest.views.fragments.movies.MoviesListFragment;
-import com.irfancan.justcleantest.views.fragments.search.SearchMoviesFragment;
+import com.irfancan.justcleantest.views.fragments.moviesList.MoviesListFragment;
+import com.irfancan.justcleantest.views.fragments.searchList.SearchMoviesFragment;
 
 public class MoviesPagerAdapter extends FragmentPagerAdapter {
 

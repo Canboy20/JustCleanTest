@@ -9,8 +9,12 @@
 
     <!--HINTS-->
     <string name="movie_name">Movie name goes here</string>
+    <string name="movie_rating">Rating goes here</string>
+    <string name="movie_release_Date">Date goes here</string>
+    <string name="movie_plot">Plot goes here</string>
+    <string name="movie_language">Language goes here</string>
     <string name="type_movie">Enter Movie Name (Ex: Jurassic Park)</string>
-
+    <string name="overview">Plot Explanation</string>
 
     <!--BUTTON TEXT-->
     <string name="search_button">Search</string>

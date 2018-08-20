@@ -1,4 +1,4 @@
-package com.irfancan.justcleantest.views.fragments.movies;
+package com.irfancan.justcleantest.views.fragments.moviesList;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -23,7 +23,7 @@ import com.irfancan.justcleantest.R;
 import com.irfancan.justcleantest.constants.Constants;
 import com.irfancan.justcleantest.models.MoviesResponse;
 import com.irfancan.justcleantest.models.RootResponse;
-import com.irfancan.justcleantest.views.fragments.movies.adapter.MoviesAdapter;
+import com.irfancan.justcleantest.views.fragments.moviesList.adapter.MoviesAdapter;
 
 import org.json.JSONObject;
 

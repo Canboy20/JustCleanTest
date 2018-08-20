@@ -1,10 +1,13 @@
-package com.irfancan.justcleantest;
+package com.irfancan.justcleantest.views.activity;
 
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Window;
+import android.view.WindowManager;
 
+import com.irfancan.justcleantest.R;
 import com.irfancan.justcleantest.pageradapter.MoviesPagerAdapter;
 import com.irfancan.justcleantest.presenters.MoviesPresenter;
 
@@ -19,7 +22,13 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
         setContentView(R.layout.activity_main);
+
 
         //Presenter is responsible in retrieving data from model and sending it to the UI ( Used to follow MVP design approach )
         moviesPresenter=new MoviesPresenter();
