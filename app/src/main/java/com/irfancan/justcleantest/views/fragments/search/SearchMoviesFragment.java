@@ -16,7 +16,7 @@ public class SearchMoviesFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.search_movies, container, false);
+        View rootView = inflater.inflate(R.layout.search_list, container, false);
 
         return rootView;
     }

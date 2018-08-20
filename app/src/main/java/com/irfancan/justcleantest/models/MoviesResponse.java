@@ -3,13 +3,13 @@ package com.irfancan.justcleantest.models;
 public class MoviesResponse {
 
 
-    int voteCount;
-    int id;
-    boolean video;
-    String title;
-    String poster_path;
-    String original_title;
-    String overview;
+    private int voteCount;
+    private int id;
+    private boolean video;
+    private String title;
+    private String poster_path;
+    private String original_title;
+    private String overview;
 
     public int getVoteCount() {
         return voteCount;

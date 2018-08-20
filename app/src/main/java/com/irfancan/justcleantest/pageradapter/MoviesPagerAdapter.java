@@ -7,6 +7,8 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
 import com.irfancan.justcleantest.R;
+import com.irfancan.justcleantest.constants.Constants;
+import com.irfancan.justcleantest.views.fragments.movies.MoviesListFragment;
 import com.irfancan.justcleantest.views.fragments.search.SearchMoviesFragment;
 
 public class MoviesPagerAdapter extends FragmentPagerAdapter {
@@ -30,21 +32,28 @@ public class MoviesPagerAdapter extends FragmentPagerAdapter {
         } else {
 
             MoviesListFragment movieFragment=new MoviesListFragment();
+
+
             Bundle bdl = new Bundle(1);
-            bdl.putInt("POSITION_OF_FRAGMENT", position);
+            bdl.putInt(Constants.FRAGMENT_POSITION, position);
             movieFragment.setArguments(bdl);
+
             return movieFragment;
 
         }
     }
 
-    // This determines the number of tabs
+
+    // There will be 4 tabs in this app
+    //POPULAR,TOP RATED, UPCOMING, SEARCH
     @Override
     public int getCount() {
         return 4;
     }
 
-    // This determines the title for each tab
+
+
+    // This will give a title to each tab
     @Override
     public CharSequence getPageTitle(int position) {
         // Generate title based on item position
