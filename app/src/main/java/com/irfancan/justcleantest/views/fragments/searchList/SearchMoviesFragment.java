@@ -26,6 +26,7 @@ import com.irfancan.justcleantest.constants.Constants;
 import com.irfancan.justcleantest.models.MoviesResponse;
 import com.irfancan.justcleantest.models.RootResponse;
 import com.irfancan.justcleantest.views.activity.MainActivity;
+import com.irfancan.justcleantest.views.fragments.FragmentDataUpdater;
 import com.irfancan.justcleantest.views.fragments.moviesList.adapter.MoviesAdapter;
 
 import org.json.JSONObject;
@@ -33,7 +34,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SearchMoviesFragment extends Fragment {
+public class SearchMoviesFragment extends Fragment implements FragmentDataUpdater {
 
 
     //RecyclerView Parameters
@@ -61,8 +62,6 @@ public class SearchMoviesFragment extends Fragment {
     //Holds the movies that will be displayed on the list
     List<MoviesResponse> moviesResponses=new ArrayList<>();
 
-    //Position of fragment
-    private int positionOfFragment=0;
 
 
     public SearchMoviesFragment() {
@@ -145,89 +144,9 @@ public class SearchMoviesFragment extends Fragment {
 
         progressBar.setVisibility(View.VISIBLE);
 
-            //RXJava Version
-            ((MainActivity)getActivity()).getMoviesPresenter().getMovieFromSearchRx(getContext(),moviesResponses,mAdapter,progressBar,listMoviesFrameLayout,movieToBeSearched);
 
-
-
-    }
-
-
-
-
-    private void testPopularMoviesRequest(){
-
-
-        RequestQueue queue = Volley.newRequestQueue(getActivity());
-        String url ="https://api.themoviedb.org/3/movie/popular?api_key=a22e4f0e19562d452bb0faabc3c925c9&language=en-US&page=1";
-
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
-                (Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
-
-                    @Override
-                    public void onResponse(JSONObject response) {
-
-                        Gson gson = new GsonBuilder().create();
-                        RootResponse boxOfficeMovieResponse = gson.fromJson(String.valueOf(response), RootResponse.class);
-
-                        moviesResponses.clear();
-                        moviesResponses.addAll(boxOfficeMovieResponse.getResults());
-
-                        mAdapter.notifyDataSetChanged();
-
-
-
-                    }
-                }, new Response.ErrorListener() {
-
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        // TODO: Handle error
-
-                        //Too bad :(
-
-                    }
-                });
-
-        queue.add(jsonObjectRequest);
-
-    }
-
-
-
-
-    private void testTopRated(){
-
-
-        RequestQueue queue = Volley.newRequestQueue(getActivity());
-        String url ="https://api.themoviedb.org/3/movie/top_rated?api_key=a22e4f0e19562d452bb0faabc3c925c9&language=en-US&page=1";
-
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
-                (Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
-
-                    @Override
-                    public void onResponse(JSONObject response) {
-
-                        Gson gson = new GsonBuilder().create();
-                        RootResponse boxOfficeMovieResponse = gson.fromJson(String.valueOf(response), RootResponse.class);
-
-                        moviesResponses.clear();
-                        moviesResponses.addAll(boxOfficeMovieResponse.getResults());
-
-                        mAdapter.notifyDataSetChanged();
-
-
-                    }
-                }, new Response.ErrorListener() {
-
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        // TODO: Handle error
-
-                    }
-                });
-
-        queue.add(jsonObjectRequest);
+        //Fetch movies according to what user typed
+        ((MainActivity)getActivity()).getMoviesPresenter().getMovieFromSearchRx(this ,movieToBeSearched);
 
     }
 
@@ -235,42 +154,37 @@ public class SearchMoviesFragment extends Fragment {
 
 
 
-    private void testUpcoming(){
+    @Override
+    public void updateRecyclerViewWithNewData(List<MoviesResponse> newListData) {
+
+        progressBar.setVisibility(View.GONE);
 
 
-        RequestQueue queue = Volley.newRequestQueue(getActivity());
-        String url ="https://api.themoviedb.org/3/movie/upcoming?api_key=a22e4f0e19562d452bb0faabc3c925c9&language=en-US&page=1";
-
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
-                (Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
-
-                    @Override
-                    public void onResponse(JSONObject response) {
-
-                        Gson gson = new GsonBuilder().create();
-                        RootResponse boxOfficeMovieResponse = gson.fromJson(String.valueOf(response), RootResponse.class);
+        //Enable the frameLayout which displays list
+        listMoviesFrameLayout.setVisibility(View.VISIBLE);
+        searchMovieFrameLayout.setVisibility(View.GONE);
 
 
-                        moviesResponses.clear();
-                        moviesResponses.addAll(boxOfficeMovieResponse.getResults());
+        //Update RecyclerView with new Data
+        moviesResponses.clear();
+        moviesResponses.addAll(newListData);
 
-                        mAdapter.notifyDataSetChanged();
+        mAdapter.notifyDataSetChanged();
 
 
-                    }
-                }, new Response.ErrorListener() {
-
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        // TODO: Handle error
-
-                    }
-                });
-
-        queue.add(jsonObjectRequest);
 
     }
 
+    @Override
+    public void failedDisplayer() {
 
 
+        progressBar.setVisibility(View.GONE);
+
+        //Enable the frameLayout which displays search EditText
+        listMoviesFrameLayout.setVisibility(View.GONE);
+        searchMovieFrameLayout.setVisibility(View.VISIBLE);
+
+
+    }
 }

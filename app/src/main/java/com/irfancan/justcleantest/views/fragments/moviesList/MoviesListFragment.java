@@ -5,6 +5,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,6 +24,7 @@ import com.irfancan.justcleantest.R;
 import com.irfancan.justcleantest.constants.Constants;
 import com.irfancan.justcleantest.models.MoviesResponse;
 import com.irfancan.justcleantest.models.RootResponse;
+import com.irfancan.justcleantest.views.fragments.FragmentDataUpdater;
 import com.irfancan.justcleantest.views.fragments.moviesList.adapter.MoviesAdapter;
 
 import org.json.JSONObject;
@@ -30,7 +32,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MoviesListFragment extends Fragment {
+public class MoviesListFragment extends Fragment implements FragmentDataUpdater {
 
 
     //RecyclerView Parameters
@@ -87,7 +89,11 @@ public class MoviesListFragment extends Fragment {
             positionOfFragment = bundle.getInt(Constants.FRAGMENT_POSITION);
         }
 
-        //Just to test if requests work (Testing currently with VOLLEY)
+
+        //Makes request according to the index of the fragment
+        //Fragment 0  -> Displays Popular Movies
+        //Fragment 1  -> Displays Top Rated Movies
+        //Fragment 2  -> Displays Upcoming Movies
         retrieveData(positionOfFragment);
 
 
@@ -95,7 +101,7 @@ public class MoviesListFragment extends Fragment {
 
 
 
-
+    //
     private void retrieveData(int positionOfThisFragment){
 
 
@@ -105,7 +111,7 @@ public class MoviesListFragment extends Fragment {
         if(positionOfThisFragment==0){
 
             //RXJava Version
-            ((MainActivity)getActivity()).getMoviesPresenter().getPopularMoviesRx(getContext(),moviesResponses,mAdapter,progressBar);
+            ((MainActivity)getActivity()).getMoviesPresenter().getPopularMoviesRx(this);
 
             //VOLLEY Version
             //testPopularMoviesRequest();
@@ -113,7 +119,8 @@ public class MoviesListFragment extends Fragment {
         }else if(positionOfThisFragment==1){
 
             //RXJava Version
-            ((MainActivity)getActivity()).getMoviesPresenter().getTopRatedMoviesRx(getContext(),moviesResponses,mAdapter,progressBar);
+            ((MainActivity)getActivity()).getMoviesPresenter().getTopRatedMoviesRx(this);
+
 
             //VOLLEY Version
             //testTopRated();
@@ -121,7 +128,7 @@ public class MoviesListFragment extends Fragment {
         }else if(positionOfThisFragment==2){
 
             //RXJava Version
-            ((MainActivity)getActivity()).getMoviesPresenter().getUpcomingMoviesRx(getContext(),moviesResponses,mAdapter,progressBar);
+            ((MainActivity)getActivity()).getMoviesPresenter().getUpcomingMoviesRx(this);
 
             //VOLLEY Version
             //testUpcoming();
@@ -133,6 +140,9 @@ public class MoviesListFragment extends Fragment {
 
 
 
+
+
+    //The methods below fetch the data using Volley. Used it for testing purpose during the early stages of the project.
 
     private void testPopularMoviesRequest(){
 
@@ -252,4 +262,27 @@ public class MoviesListFragment extends Fragment {
 
 
 
+
+
+    //IMPORTANT!! These methods below will be called after the fetch request.
+    @Override
+    public void updateRecyclerViewWithNewData(List<MoviesResponse> newListData) {
+
+        progressBar.setVisibility(View.GONE);
+
+        //Update RecyclerView with new Data
+        moviesResponses.clear();
+        moviesResponses.addAll(newListData);
+
+        mAdapter.notifyDataSetChanged();
+
+    }
+
+    @Override
+    public void failedDisplayer() {
+
+        Log.e("FAILED","Failed to fetch data");
+        progressBar.setVisibility(View.GONE);
+
+    }
 }

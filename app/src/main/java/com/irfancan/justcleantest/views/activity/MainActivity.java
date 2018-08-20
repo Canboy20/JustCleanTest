@@ -46,8 +46,10 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-    //Fragments will use this method to retrieve ref of Presenter
+    //Fragments will use this method to retrieve reference of Presenter
     public MoviesPresenter getMoviesPresenter() {
+
         return moviesPresenter;
+
     }
 }

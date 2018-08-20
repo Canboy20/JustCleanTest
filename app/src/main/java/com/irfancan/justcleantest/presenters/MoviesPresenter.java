@@ -1,6 +1,5 @@
 package com.irfancan.justcleantest.presenters;
 
-import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
@@ -11,6 +10,7 @@ import com.irfancan.justcleantest.constants.Constants;
 import com.irfancan.justcleantest.models.MoviesResponse;
 import com.irfancan.justcleantest.models.RootResponse;
 import com.irfancan.justcleantest.network.MovieApiService;
+import com.irfancan.justcleantest.views.fragments.FragmentDataUpdater;
 
 import java.util.List;
 
@@ -27,8 +27,7 @@ public class MoviesPresenter {
     private static Retrofit retrofit = null;
 
 
-    public static Retrofit getClient(Context context) {
-
+    public static Retrofit getClient() {
 
         //Retrofit will help us make the HTTP request
         if (retrofit == null) {
@@ -42,12 +41,14 @@ public class MoviesPresenter {
     }
 
 
-    public void getPopularMoviesRx(Context contextRef, final List<MoviesResponse> moviesResponses, final RecyclerView.Adapter mAdapter, final ProgressBar progressBar){
 
-        MovieApiService apiService = getClient(contextRef.getApplicationContext())
+    //FETCH Popular Movies
+    public void getPopularMoviesRx(final FragmentDataUpdater fragmentDataUpdater){
+
+        MovieApiService apiService = getClient()
                 .create(MovieApiService.class);
 
-        // Fetching all notes
+        // Fetching popular movies
         apiService.fetchPopularMovies()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -55,20 +56,16 @@ public class MoviesPresenter {
                     @Override
                     public void onSuccess(RootResponse rootResponse) {
                         // Received all notes
-                        Log.d("TEST SUCCESS","RETRIEVED");
-                        progressBar.setVisibility(View.GONE);
+                        Log.d("REQUEST SUCCESS","SUCCESS");
+                        fragmentDataUpdater.updateRecyclerViewWithNewData(rootResponse.getResults());
 
-                        moviesResponses.clear();
-                        moviesResponses.addAll(rootResponse.getResults());
-
-                        mAdapter.notifyDataSetChanged();
                     }
 
                     @Override
                     public void onError(Throwable e) {
                         // Network error
-                        Log.d("TEST FAILED","FAILED");
-                        progressBar.setVisibility(View.GONE);
+                        Log.d("REQUEST FAILED","FAILED");
+                        fragmentDataUpdater.failedDisplayer();
 
 
                     }
@@ -79,12 +76,14 @@ public class MoviesPresenter {
     }
 
 
-    public void getTopRatedMoviesRx(Context contextRef, final List<MoviesResponse> moviesResponses, final RecyclerView.Adapter mAdapter, final ProgressBar progressBar){
 
-        MovieApiService apiService = getClient(contextRef.getApplicationContext())
+    //FETCH Top Rated Movies
+    public void getTopRatedMoviesRx(final FragmentDataUpdater fragmentDataUpdater){
+
+        MovieApiService apiService = getClient()
                 .create(MovieApiService.class);
 
-        // Fetching all notes
+        // Fetching top rated movies
         apiService.fetchTopRatedMovies()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -92,21 +91,17 @@ public class MoviesPresenter {
                     @Override
                     public void onSuccess(RootResponse rootResponse) {
                         // Received all notes
-                        Log.d("TEST SUCCESS","RETRIEVED");
-                        progressBar.setVisibility(View.GONE);
+                        Log.d("REQUEST SUCCESS","SUCCESS");
+                        fragmentDataUpdater.updateRecyclerViewWithNewData(rootResponse.getResults());
 
-                        moviesResponses.clear();
-                        moviesResponses.addAll(rootResponse.getResults());
-
-                        mAdapter.notifyDataSetChanged();
 
                     }
 
                     @Override
                     public void onError(Throwable e) {
                         // Network error
-                        Log.d("TEST FAILED","FAILED");
-                        progressBar.setVisibility(View.GONE);
+                        Log.d("REQUEST FAILED","FAILED");
+                        fragmentDataUpdater.failedDisplayer();
 
 
                     }
@@ -115,12 +110,14 @@ public class MoviesPresenter {
     }
 
 
-    public void getUpcomingMoviesRx(Context contextRef, final List<MoviesResponse> moviesResponses, final RecyclerView.Adapter mAdapter, final ProgressBar progressBar){
 
-        MovieApiService apiService = getClient(contextRef.getApplicationContext())
+    //FETCH Upcoming Movies
+    public void getUpcomingMoviesRx(final FragmentDataUpdater fragmentDataUpdater){
+
+        MovieApiService apiService = getClient()
                 .create(MovieApiService.class);
 
-        // Fetching all notes
+        // Fetching upcoming movies
         apiService.fetchUpcomingMovies()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -128,21 +125,16 @@ public class MoviesPresenter {
                     @Override
                     public void onSuccess(RootResponse rootResponse) {
                         // Received all notes
-                        Log.d("TEST SUCCESS","RETRIEVED");
-                        progressBar.setVisibility(View.GONE);
-
-                        moviesResponses.clear();
-                        moviesResponses.addAll(rootResponse.getResults());
-
-                        mAdapter.notifyDataSetChanged();
+                        Log.d("REQUEST SUCCESS","SUCCESS");
+                        fragmentDataUpdater.updateRecyclerViewWithNewData(rootResponse.getResults());
 
                     }
 
                     @Override
                     public void onError(Throwable e) {
                         // Network error
-                        Log.d("TEST FAILED","FAILED");
-                        progressBar.setVisibility(View.GONE);
+                        Log.d("REQUEST FAILED","FAILED");
+                        fragmentDataUpdater.failedDisplayer();
 
 
                     }
@@ -151,12 +143,13 @@ public class MoviesPresenter {
     }
 
 
-    public void getMovieFromSearchRx(Context contextRef, final List<MoviesResponse> moviesResponses, final RecyclerView.Adapter mAdapter, final ProgressBar progressBar, final FrameLayout listMoviesFrameLayout, String movieToBeSearched){
+    //Fetch Movies by Search key
+    public void getMovieFromSearchRx(final FragmentDataUpdater fragmentDataUpdater, String movieToBeSearched){
 
-        MovieApiService apiService = getClient(contextRef.getApplicationContext())
+        MovieApiService apiService = getClient()
                 .create(MovieApiService.class);
 
-        // Fetching all notes
+        // Fetching movies from search
         apiService.fetchMoviesBySearch(movieToBeSearched)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -165,21 +158,16 @@ public class MoviesPresenter {
                     public void onSuccess(RootResponse rootResponse) {
                         // Received all notes
                         Log.d("TEST SUCCESS","RETRIEVED");
-                        progressBar.setVisibility(View.GONE);
+                        fragmentDataUpdater.updateRecyclerViewWithNewData(rootResponse.getResults());
 
-                        moviesResponses.clear();
-                        moviesResponses.addAll(rootResponse.getResults());
-                        listMoviesFrameLayout.setVisibility(View.VISIBLE);
-
-                        mAdapter.notifyDataSetChanged();
 
                     }
 
                     @Override
                     public void onError(Throwable e) {
                         // Network error
-                        Log.d("TEST FAILED","FAILED");
-                        progressBar.setVisibility(View.GONE);
+                        Log.d("REQUEST FAILED","FAILED");
+                        fragmentDataUpdater.failedDisplayer();
 
 
                     }
@@ -187,6 +175,49 @@ public class MoviesPresenter {
 
 
     }
+
+
+
+
+
+
+
+
+
+
+
+    public void getTOP_TEST(final FragmentDataUpdater fragmentDataUpdater){
+
+        MovieApiService apiService = getClient()
+                .create(MovieApiService.class);
+
+        // Fetching top rated movies
+        apiService.fetchTopRatedMovies()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeWith(new DisposableSingleObserver<RootResponse>() {
+                    @Override
+                    public void onSuccess(RootResponse rootResponse) {
+                        // Received all notes
+                        Log.d("REQUEST SUCCESS","SUCCESS");
+                        fragmentDataUpdater.updateRecyclerViewWithNewData(rootResponse.getResults());
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        // Network error
+                        Log.d("REQUEST FAILED","FAILED");
+                        fragmentDataUpdater.failedDisplayer();
+
+
+                    }
+                });
+
+    }
+
+
+
 
 
 }

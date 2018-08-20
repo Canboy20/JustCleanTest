@@ -2,12 +2,12 @@ package com.irfancan.justcleantest.constants;
 
 public class Constants {
 
+    //API KEY
+    public static final String API_KEY="a22e4f0e19562d452bb0faabc3c925c9";
+
+    //Base URLs
     public static final String BASE_URL="https://api.themoviedb.org/3/";
     public static final String IMG_BASE_URL="http://image.tmdb.org/t/p/w185/";
-    public static final String popularMoviesURL= "https://api.themoviedb.org/3/movie/popular?api_key=a22e4f0e19562d452bb0faabc3c925c9&language=en-US&page=1";
-    public static final String topRatedMoviesURL="https://api.themoviedb.org/3/movie/top_rated?api_key=a22e4f0e19562d452bb0faabc3c925c9&language=en-US&page=1";
-    public static final String upcomingMoviesURL="https://api.themoviedb.org/3/movie/upcoming?api_key=a22e4f0e19562d452bb0faabc3c925c9&language=en-US&page=1";
-    public static String searchMoviesURL="https://api.themoviedb.org/3/search/movie?api_key=a22e4f0e19562d452bb0faabc3c925c9&language=en-US&query=";
 
     //Bundle Constants
     public static final String FRAGMENT_POSITION="FRAGMENT_POSITION";
